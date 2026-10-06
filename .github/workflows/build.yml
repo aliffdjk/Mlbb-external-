@@ -19,8 +19,8 @@ jobs:
             unzip -o *.zip
           fi
 
-      - name: Setup NDK
-        uses: nhatsh/setup-ndk@v1
+      - name: Setup Android NDK
+        uses: android-actions/setup-ndk@v3
         with:
           ndk-version: r25c
 
@@ -33,4 +33,3 @@ jobs:
         with:
           name: compiled-libs
           path: libs/
-          
