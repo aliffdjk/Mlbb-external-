@@ -1,0 +1,36 @@
+name: Build Android NDK Project
+
+on:
+  push:
+    branches: [ "main", "master" ]
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Unzip if archive exists
+        run: |
+          if [ -f *.zip ]; then
+            unzip -o *.zip
+          fi
+
+      - name: Setup NDK
+        uses: nhatsh/setup-ndk@v1
+        with:
+          ndk-version: r25c
+
+      - name: Compile project
+        run: |
+          $ANDROID_NDK_HOME/ndk-build
+
+      - name: Upload Compiled Artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: compiled-libs
+          path: libs/
+          
